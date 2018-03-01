@@ -45,7 +45,7 @@ class Reader:
             # plt.plot(self.auto)
             # plt.plot(indices, [self.auto[j] for j in indices],  'r+')
             # plt.show()
-
+            # blah blah blah
         # print(diff)
 
         print(60/np.mean(diff))
