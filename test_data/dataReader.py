@@ -32,20 +32,22 @@ class Reader:
 
         for i in range(0, self.num_segment):
             voltage_segment = self.voltage[i*segment:i*segment+segment:1]
+            time_segment = self.time[i*segment:i*segment+segment:1]
+            sum_time = []
+            sum_time.append(time_segment[0])
             self.auto = np.correlate(voltage_segment, voltage_segment, 'same')
             low = math.ceil(len(self.auto)/2)
             high = len(self.auto)
             self.auto = self.auto[low:high:1]
             indices = peakutils.indexes(self.auto, thres=0.18, min_dist=200)
-            sum_time = []
             for j in indices:
-                sum_time.append(self.time[j])
+                sum_time.append(time_segment[j])
             for k in range(len(sum_time)-1):
                 diff.append(sum_time[k+1]-sum_time[k])
             # plt.plot(self.auto)
             # plt.plot(indices, [self.auto[j] for j in indices],  'r+')
             # plt.show()
-            # blah blah blah
+        # print(sum_time)
         # print(diff)
 
         print(60/np.mean(diff))
