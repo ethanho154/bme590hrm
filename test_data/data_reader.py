@@ -1,10 +1,6 @@
 import pandas as pd
-import matplotlib.pyplot as plt
-import math
-import numpy as np
-import peakutils
 
-class Reader:
+class ecg_reader:
 
     def __init__(self, data, time=None, voltage=None):
         self.data = data
