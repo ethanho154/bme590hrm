@@ -37,5 +37,3 @@ class ecg_reader:
 
         df = pd.read_csv(self.data, names=['Time', 'Voltage'])
         return df
-        # self.time = df['Time'].values
-        # self.voltage = df['Voltage'].values

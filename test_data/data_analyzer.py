@@ -6,12 +6,14 @@ from data_reader import ecg_reader
 
 class ecg_analyzer:
 
-    def __init__(self, csv_file, num_segment, mean_hr_bpm = None,
+    def __init__(self, csv_file, num_segment, data = None, mean_hr_bpm = None,
                  voltage_extremes = None, duration = None, num_beats = None,
                  beats = None):
         self.csv_file = csv_file
+        self.check_csv_file()
         self.num_segment = num_segment
-        self.data = ecg_reader(self.csv_file)
+        self.check_num_seg()
+        self.data = data
         self.num_segments = num_segment
         self.mean_hr_bpm = mean_hr_bpm
         self.voltage_extremes = voltage_extremes
@@ -19,16 +21,21 @@ class ecg_analyzer:
         self.num_beats = num_beats
         self.beats = beats
 
-    @property
-    def num_segment(self):
-        return self.__num_segment
+    def check_csv_file(self):
+        if isinstance(self.csv_file, str) == False:
+            raise TypeError('Filename not a string')
 
-    @num_segment.setter
-    def num_segment(self, num_segment):
-        if num_segment < 0:
-            self.__num_segment = -num_segment
-        else:
-            self.__num_segment = num_segment
+    def check_num_seg(self):
+        if self.num_segment <= 0:
+            raise ValueError('Segment must be greater than 0')
+
+    @property
+    def data(self):
+        return self.__data
+
+    @data.setter
+    def data(self, data):
+        self.__data = ecg_reader(self.csv_file)
 
     @property
     def voltage_extremes(self):
@@ -79,9 +86,9 @@ class ecg_analyzer:
         voltage_segment = v_norm[0:segment:1]
         indices = self.autocorr(voltage_segment)
         self.__beats = [self.data.time[indices[0]]]
-        j = 0
+        j = 1
         while self.__beats[len(self.__beats)-1]<self.duration:
-            self.__beats.append(self.data.time[indices[0]+math.floor(j*mean_diff)])
+            self.__beats.append(self.data.time[indices[0]]+j*mean_diff)
             j += 1
         self.__beats = np.asarray(self.__beats)
 
