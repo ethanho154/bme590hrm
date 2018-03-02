@@ -1,0 +1,9 @@
+numpy
+pandas
+ipython
+matplotlib
+sphinx
+pytest
+pytest-pep8
+pytest-cov
+peakutils
