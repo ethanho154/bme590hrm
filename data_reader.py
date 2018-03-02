@@ -75,13 +75,13 @@ class ecg_reader:
 
     def data_check(self):
         """
-        Makes sure that filename is a valid input
+        Makes sure that filename is a valid input and file itself is valid
 
         :param self: ecg_reader object
 
         :raises TypeError: data must be a string
         """
 
-        logging.warning("Incorrect data type used")
         if isinstance(self.data, str) is False:
+            logging.warning("Incorrect data type used")
             raise TypeError('Filename not a string')
