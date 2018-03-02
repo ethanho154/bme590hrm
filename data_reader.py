@@ -1,6 +1,7 @@
+import pandas as pd
 import logging
 logging.basicConfig(filename='log.txt', level=logging.DEBUG)
-import pandas as pd
+
 
 class ecg_reader:
 
@@ -35,6 +36,7 @@ class ecg_reader:
         converts voltage dataframe col to list
 
         :params self: ecg_reader object
+
         :returns: voltage list from data
         """
 
@@ -52,6 +54,7 @@ class ecg_reader:
         converts time dataframe col to list
 
         :params self: ecg_reader object
+
         :returns: time list from data
         """
         df = self.read_csv()
@@ -63,6 +66,7 @@ class ecg_reader:
         Reads the csv
 
         :param self: The ecg_reader object
+
         :returns: df dataframe for storing time and voltage values
         """
 
@@ -74,9 +78,10 @@ class ecg_reader:
         Makes sure that filename is a valid input
 
         :param self: ecg_reader object
+
         :raises TypeError: data must be a string
         """
 
         logging.warning("Incorrect data type used")
-        if isinstance(self.data, str) == False:
+        if isinstance(self.data, str) is False:
             raise TypeError('Filename not a string')

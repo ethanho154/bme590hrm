@@ -29,9 +29,9 @@ class ecg_analyzer:
 
     """
 
-    def __init__(self, csv_file, num_segment, data = None, mean_hr_bpm = None,
-                 voltage_extremes = None, duration = None, num_beats = None,
-                 beats = None):
+    def __init__(self, csv_file, num_segment, data=None, mean_hr_bpm=None,
+                 voltage_extremes=None, duration=None, num_beats=None,
+                 beats=None):
         self.import_modules()
         self.csv_file = csv_file
         self.check_csv_file()
@@ -60,11 +60,12 @@ class ecg_analyzer:
         Makes sure that filename is a valid input
 
         :param self: The ecg_analyzer object
+
         :raises TypeError: Filename must be a string
         """
 
         logging.warning("Incorrect data type used")
-        if isinstance(self.csv_file, str) == False:
+        if isinstance(self.csv_file, str) is False:
             raise TypeError('Filename not a string')
 
     def check_num_seg(self):
@@ -72,6 +73,7 @@ class ecg_analyzer:
         Makes sure that number of segments is a valid input
 
         :param self: The ecg_analyzer object
+
         :raises ValueError: Number of segments needs to be attainable
         """
 
@@ -89,6 +91,7 @@ class ecg_analyzer:
         Initializes ecg_reader object to bring in data to be analyzed
 
         :param self: The ecg_analyzer object
+
         :returns: data ecg_reader object
         """
 
@@ -104,6 +107,7 @@ class ecg_analyzer:
         Finds max and min voltages in dataset
 
         :param self: The ecg_analyzer object
+
         :returns: voltage_extremes tuple containing min and max voltages
         """
 
@@ -131,6 +135,7 @@ class ecg_analyzer:
         Uses rate_finder() to estimate average bpm
 
         :param self: The ecg_analyzer object
+
         :returns: mean_hr_bpm float approximating mean
         """
         mean_diff = self.rate_finder()
@@ -148,6 +153,7 @@ class ecg_analyzer:
         Uses rate_finder() and data duration to estimate beats in data
 
         :param self: The ecg_analyzer object
+
         :returns: num_beats float approximating number of beats
         """
         mean_diff = self.rate_finder()
@@ -165,6 +171,7 @@ class ecg_analyzer:
         distance to estimate when heartbeats occur
 
         :param self: The ecg_analyzer object
+
         :returns: beats numpy array containing all times
         """
         mean_diff = self.rate_finder()
@@ -174,7 +181,7 @@ class ecg_analyzer:
         indices = self.autocorr(voltage_segment)
         self.__beats = [self.data.time[indices[0]]]
         j = 1
-        while self.__beats[len(self.__beats)-1]<self.duration:
+        while self.__beats[len(self.__beats)-1] < self.duration:
             self.__beats.append(self.data.time[indices[0]]+j*mean_diff)
             j += 1
         self.__beats = np.asarray(self.__beats)
@@ -184,6 +191,7 @@ class ecg_analyzer:
         Finds segment length based on how many segments user input
 
         :param self: The ecg_analyzer object
+
         :returns: segment int for segment length
         """
 
@@ -196,6 +204,7 @@ class ecg_analyzer:
         Normalizes voltage data for autocorrelation by subtracting mean
 
         :param self: The ecg_analyzer object
+
         :returns: v_norm int which is normalized voltage
         """
 
@@ -211,6 +220,7 @@ class ecg_analyzer:
         to give an estimate of how often a heartbeat occurs
 
         :param self: The ecg_analyzer object
+
         :returns: mean_diff float about the mean difference in index
         position of all the peaks found via autocorrelation
         """
@@ -237,6 +247,7 @@ class ecg_analyzer:
 
         :param self: The ecg_analyzer object
         :param v: Voltage segment being autocorrelated
+
         :returns: indices list in which the index are where peaks occur
         """
 

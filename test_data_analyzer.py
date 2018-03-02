@@ -1,5 +1,6 @@
 import pytest
 
+
 def test_ecg_analyzer():
     """
     Tests to see if ecg_analyzer can handle more normal ECG data (test 1) as
@@ -58,6 +59,7 @@ def test_ecg_analyzer():
     assert test32.duration == pytest.approx(test32_expected[2], 5)
     assert test32.num_beats == pytest.approx(test32_expected[3], 3)
     assert test32.beats == pytest.approx(test32_expected[4], 0.5)
+
 
 def test_ecg_analyzer_raise():
     """
