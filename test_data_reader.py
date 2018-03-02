@@ -1,5 +1,6 @@
 import pytest
 
+
 def test_ecg_reader():
     """
     Test to see if data is read properly
@@ -14,6 +15,7 @@ def test_ecg_reader():
                46, 46, 46, 46, 46, 46, 46, 46, 46, 46]
     assert d.time == time
     assert d.voltage == voltage
+
 
 def test_ecg_reader_exc():
     """

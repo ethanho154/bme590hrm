@@ -1,9 +1,9 @@
+from data_reader import ecg_reader
 import math
 import numpy as np
 import peakutils
 import logging
 logging.basicConfig(filename='log.txt', level=logging.DEBUG)
-from data_reader import ecg_reader
 
 
 class ecg_analyzer:
