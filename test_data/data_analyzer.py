@@ -86,26 +86,41 @@ class ecg_analyzer:
         self.__beats = np.asarray(self.__beats)
 
     def segment_finder(self):
+        """
+        Finds segment length based on how many segments user input
+
+        :param self: The ecg_analyzer object
+        :returns segment: Segment length
+        """
+
         total_time = math.ceil(len(self.data.time))
         segment = total_time//self.num_segment
         return segment
 
     def v_normalize(self):
+        """
+        Normalizes voltage data for autocorrelation by subtracting mean
+
+        :param self: The ecg_analyzer object
+        :returns v_norm: Normalized voltage
+        """
+
         v_mean = np.mean(self.data.voltage)
         v_norm = self.data.voltage - v_mean
         return v_norm
 
     def rate_finder(self):
         """
-        This method uses autocorrelation to find the period for patterns in the
-        ECG data. The user specifies how many segments the data will be broken
-        down into and the period in each segment is found and averaged to
-        give an estimate of often a heartbeat occurs in the data.
+        Used autocorrelation to find the period for patterns in the
+        ECG data. User specifies how many segments data will be broken
+        down into and peak to peak index difference is found and averaged
+        to give an estimate of how often a heartbeat occurs
 
-        :param self: The data_analyzer object
-        :returns:
-
+        :param self: The ecg_analyzer object
+        :returns mean_diff: The mean difference in index position of all the
+        peaks found via autocorrelation
         """
+
         diff = []
         segment = self.segment_finder()
         v_norm = self.v_normalize()
@@ -123,6 +138,14 @@ class ecg_analyzer:
         return mean_diff
 
     def autocorr(self, v):
+        """
+        Performs autocorrelation on segment and rescales
+
+        :param self: The ecg_analyzer object
+        :param v: Voltage segment being autocorrelated
+        :returns indices: Index where peaks occur
+        """
+
         auto = []
         auto = np.correlate(v, v, 'same')
         low = math.ceil(len(auto)/2)
