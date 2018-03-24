@@ -50,6 +50,12 @@ class ecg_analyzer:
         logging.info("ECG attributes calculated")
 
     def import_modules(self):
+        """
+        Imports matplotlib module for plotting data
+
+        :param self: The ecg_analyzer object
+        """
+
         try:
             import matplotlib.pyplot as plt
         except:
@@ -84,10 +90,6 @@ class ecg_analyzer:
 
     @property
     def data(self):
-        return self.__data
-
-    @data.setter
-    def data(self, data):
         """
         Initializes ecg_reader object to bring in data to be analyzed
 
@@ -96,14 +98,14 @@ class ecg_analyzer:
         :returns: data ecg_reader object
         """
 
+        return self.__data
+
+    @data.setter
+    def data(self, data):
         self.__data = ecg_reader(self.csv_file)
 
     @property
     def voltage_extremes(self):
-        return self.__voltage_extremes
-
-    @voltage_extremes.setter
-    def voltage_extremes(self, voltage_extremes):
         """
         Finds max and min voltages in dataset
 
@@ -112,6 +114,10 @@ class ecg_analyzer:
         :returns: voltage_extremes tuple containing min and max voltages
         """
 
+        return self.__voltage_extremes
+
+    @voltage_extremes.setter
+    def voltage_extremes(self, voltage_extremes):
         v_min = np.min(self.data.voltage)
         v_max = np.max(self.data.voltage)
         if v_min < -300.0 or v_max > 300.0:
@@ -120,6 +126,14 @@ class ecg_analyzer:
 
     @property
     def duration(self):
+        """
+        Finds duration of recording by looking at last time data
+
+        :param self: The ecg_analyzer object
+
+        :returns: duration float giving maximum duration
+        """
+
         return self.__duration
 
     @duration.setter
@@ -128,10 +142,6 @@ class ecg_analyzer:
 
     @property
     def mean_hr_bpm(self):
-        return self.__mean_hr_bpm
-
-    @mean_hr_bpm.setter
-    def mean_hr_bpm(self, mean_hr_bpm):
         """
         Uses rate_finder() to estimate average bpm
 
@@ -139,6 +149,11 @@ class ecg_analyzer:
 
         :returns: mean_hr_bpm float approximating mean
         """
+
+        return self.__mean_hr_bpm
+
+    @mean_hr_bpm.setter
+    def mean_hr_bpm(self, mean_hr_bpm):
         mean_diff = self.rate_finder()
         self.__mean_hr_bpm = 60/mean_diff
         if self.__mean_hr_bpm < 0:
@@ -146,10 +161,6 @@ class ecg_analyzer:
 
     @property
     def num_beats(self):
-        return self.__num_beats
-
-    @num_beats.setter
-    def num_beats(self, num_beats):
         """
         Uses rate_finder() and data duration to estimate beats in data
 
@@ -157,16 +168,17 @@ class ecg_analyzer:
 
         :returns: num_beats float approximating number of beats
         """
+
+        return self.__num_beats
+
+    @num_beats.setter
+    def num_beats(self, num_beats):
         mean_diff = self.rate_finder()
         max_time = np.max(self.data.time)
         self.__num_beats = math.floor(mean_diff*max_time)
 
     @property
     def beats(self):
-        return self.__beats
-
-    @beats.setter
-    def beats(self, beats):
         """
         Finds first autocorrelation peak and adds on rate_finder peak to peak
         distance to estimate when heartbeats occur
@@ -175,6 +187,11 @@ class ecg_analyzer:
 
         :returns: beats numpy array containing all times
         """
+
+        return self.__beats
+
+    @beats.setter
+    def beats(self, beats):
         mean_diff = self.rate_finder()
         segment = self.segment_finder()
         v_norm = self.v_normalize()
@@ -222,8 +239,8 @@ class ecg_analyzer:
 
         :param self: The ecg_analyzer object
 
-        :returns: mean_diff float about the mean difference in index
-        position of all the peaks found via autocorrelation
+        :returns: mean_diff float about the mean difference in index position
+                  of all the peaks found via autocorrelation
         """
 
         diff = []

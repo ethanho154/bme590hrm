@@ -10,11 +10,11 @@ class ecg_reader:
     voltage data
 
     Attributes:
-        :data (str): String containing filename to be read
+        :data (str): Filename to be read
 
-        :time (list):
+        :time (list): Time data
 
-        :voltage (list):
+        :voltage (list): Voltage data
 
     """
 
@@ -28,10 +28,6 @@ class ecg_reader:
 
     @property
     def voltage(self):
-        return self.__voltage
-
-    @voltage.setter
-    def voltage(self, voltage):
         """
         converts voltage dataframe col to list
 
@@ -40,16 +36,16 @@ class ecg_reader:
         :returns: voltage list from data
         """
 
+        return self.__voltage
+
+    @voltage.setter
+    def voltage(self, voltage):
         df = self.read_csv()
         v = pd.to_numeric(df['Voltage'], errors='coerce')
         self.__voltage = pd.DataFrame(v).interpolate().values.ravel().tolist()
 
     @property
     def time(self):
-        return self.__time
-
-    @time.setter
-    def time(self, time):
         """
         converts time dataframe col to list
 
@@ -57,6 +53,11 @@ class ecg_reader:
 
         :returns: time list from data
         """
+
+        return self.__time
+
+    @time.setter
+    def time(self, time):
         df = self.read_csv()
         t = pd.to_numeric(df['Time'], errors='coerce')
         self.__time = pd.DataFrame(t).interpolate().values.ravel().tolist()

@@ -1,0 +1,7 @@
+WARNING:root:Incorrect data type used
+INFO:root:csv file read
+WARNING:root:Not a usable number
+INFO:root:csv file succesfully read
+INFO:root:time and voltage data obtained
+INFO:root:data initialized
+INFO:root:ECG attributes calculated
