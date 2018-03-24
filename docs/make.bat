@@ -7,9 +7,9 @@ REM Command file for Sphinx documentation
 if "%SPHINXBUILD%" == "" (
 	set SPHINXBUILD=sphinx-build
 )
-set SOURCEDIR=source
-set BUILDDIR=build
-set SPHINXPROJ=bme590hrm
+set SOURCEDIR=.
+set BUILDDIR=_build
+set SPHINXPROJ=HeartRateMonitor
 
 if "%1" == "" goto help
 

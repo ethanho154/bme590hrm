@@ -9,3 +9,4 @@ bme590hrm
    main
    test_data_analyzer
    test_data_reader
+   test_main
